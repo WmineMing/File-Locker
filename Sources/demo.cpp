@@ -15,29 +15,47 @@ int main(int argc,char* argv[])
 	string key;
 	string postfix=".lock";
 	int errorcode;
+
 	if(argc!=4&&argc!=5)
+	{
 		printusage(argv[0]);
-	else
+	}
+
 	options=argv[1];
 	infile=argv[2];
 	key=argv[3];
 
 	if(options=="-l")
+	{
 		outfile=infile+postfix;
-	else if(options=="-u"){
+	}
+	else if(options=="-u")
+	{
 		outfile=infile;
-		outfile.resize(outfile.length()-5);}
-	else printusage(argv[0]);
+		outfile.resize(outfile.length()-5);
+	}
+	else 
+	{
+		printusage(argv[0]);
+	}
 
 	if(argc==5) outfile=argv[4];
 
 	locker file(infile,outfile,key);
+
 	if(options=="-l")
+	{
         errorcode=file.lockfile();
+	}
     else if(options=="-u")
+	{
         errorcode=file.unlockfile();
+	}
     else
+	{
         errorcode=-1;
+	}
+
 	switch(errorcode)
 	{
 		case 0:break;
@@ -45,6 +63,7 @@ int main(int argc,char* argv[])
 		case 22:cout<<"outfile error"<<endl;break;
 		default:cout<<"unknown error"<<endl;
 	}
+	
 	return errorcode;
 }
 void printusage(char* command)
