@@ -1,0 +1,2 @@
+# File-Locker
+xor encryption
